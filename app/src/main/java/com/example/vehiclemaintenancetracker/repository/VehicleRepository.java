@@ -47,8 +47,10 @@ public class VehicleRepository {
                 .client(client)
                 .build();
 
-        // Initialize mAllMaintenanceRecords
+        // Create implementation of VehicleService interface
         mVehicleService = retrofit.create(VehicleService.class);
+
+        // Initialize mAllMaintenanceRecords
         mAllMaintenanceRecords = new MutableLiveData<>();
     }
 
@@ -75,9 +77,9 @@ public class VehicleRepository {
     }
 
 
-    public MutableLiveData<VehicleMaintenance> getMovie(final int id) {
+    public MutableLiveData<VehicleMaintenance> getVehicleMaintenance(final int id) {
 
-        /* Fetch one movie by its ID. The value is available by observing the
+        /* Fetch one VehicleMaintenance by its ID. The value is available by observing the
         MutableLiveData object returned from this method.
 
         This method isn't used in the app, but fetching an item by ID is

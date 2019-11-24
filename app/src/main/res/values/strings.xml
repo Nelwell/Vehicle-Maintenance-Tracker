@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">VehicleMaintenanceTracker</string>
+    <string name="opening_title">Vehicle Maintenance Tracker</string>
 </resources>

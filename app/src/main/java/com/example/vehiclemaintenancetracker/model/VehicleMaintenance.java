@@ -81,7 +81,7 @@ public class VehicleMaintenance {
     public String toString() {
         return "VehicleMaintenance{" +
                 "id=" + id +
-                ", vehicle='" + vehicle + '\'' +
+                ", vehicle=" + vehicle +
                 ", location='" + location + '\'' +
                 ", service='" + service + '\'' +
                 ", mileage=" + mileage +
