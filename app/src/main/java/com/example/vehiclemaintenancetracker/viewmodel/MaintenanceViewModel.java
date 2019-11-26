@@ -22,23 +22,23 @@ public class MaintenanceViewModel extends AndroidViewModel {
         allMaintenanceItems = maintenanceRepository.getAllMaintenanceRecords();
     }
 
-    public MutableLiveData<List<VehicleMaintenance>> getAllMaintenanceItems() {
+    public MutableLiveData<List<VehicleMaintenance>> getAllMaintenanceRecords() {
         return allMaintenanceItems;
     }
 
-    public MutableLiveData<VehicleMaintenance> getMovie(int id) {
+    public MutableLiveData<VehicleMaintenance> getVehicleMaintenance(int id) {
         return maintenanceRepository.getVehicleMaintenance(id);
     }
 
-    public MutableLiveData<String> insert(VehicleMaintenance movie) {
-        return maintenanceRepository.insert(movie);
+    public MutableLiveData<String> insert(VehicleMaintenance maintenance) {
+        return maintenanceRepository.insert(maintenance);
     }
 
-    public void update(VehicleMaintenance movie) {
-        maintenanceRepository.update(movie);
+    public void update(VehicleMaintenance maintenance) {
+        maintenanceRepository.update(maintenance);
     }
 
-    public void delete(VehicleMaintenance movie) {
-        maintenanceRepository.delete(movie);
+    public void delete(VehicleMaintenance maintenance) {
+        maintenanceRepository.delete(maintenance);
     }
 }

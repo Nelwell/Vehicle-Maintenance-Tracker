@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">VehicleMaintenanceTracker</string>
     <string name="opening_title">Vehicle Maintenance Tracker</string>
+    <string name="maintenance">Maintenance performed</string>
+    <string name="mileage">Current mileage</string>
+    <string name="location">Location of maintenance</string>
+    <string name="notes">Additional notes</string>
+    <string name="date">Date of maintenance</string>
 </resources>
