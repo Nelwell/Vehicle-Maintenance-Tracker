@@ -37,12 +37,6 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-//        logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
-//        OkHttpClient client = new OkHttpClient.Builder()
-//                .addInterceptor(logging)
-//                .build();
-
         openingTitleScreen();
     }
 
@@ -77,4 +71,9 @@ public class MainActivity extends AppCompatActivity implements
         ft.addToBackStack(null);
         ft.commit();
     }
+
+//    @Override
+//    public void addNewMaintenanceFabPressed() {
+//
+//    }
 }

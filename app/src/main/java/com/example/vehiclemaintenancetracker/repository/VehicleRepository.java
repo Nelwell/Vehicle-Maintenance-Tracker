@@ -23,7 +23,7 @@ public class VehicleRepository {
     private static final String TAG = "VEHICLE_REPOSITORY";
 
     private VehicleService mVehicleService;
-    private final String baseURL = "https://carrecords.herokuapp.com/";
+    private final String baseURL = "https://carrecords.herokuapp.com/api/";
     private MutableLiveData<List<VehicleMaintenance>> mAllMaintenanceRecords;
 
     public VehicleRepository() {

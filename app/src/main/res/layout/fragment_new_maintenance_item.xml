@@ -20,16 +20,6 @@
             android:hint="Maintenance performed"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
 
-        <!--        <EditText-->
-        <!--            android:id="@+id/repair_edittext"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_alignParentEnd="true"-->
-        <!--            android:layout_marginStart="12dp"-->
-        <!--            android:layout_marginEnd="12dp"-->
-        <!--            android:layout_toEndOf="@id/repair_textview"-->
-        <!--            android:textAppearance="@style/TextAppearance.AppCompat.Small" />-->
-
         <EditText
             android:id="@+id/mileage_edittext"
             android:layout_width="wrap_content"

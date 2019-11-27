@@ -13,20 +13,20 @@
         android:layout_marginTop="8dp"
         android:contextClickable="true"
         android:spinnerMode="dropdown"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintEnd_toEndOf="@id/maintenance_recycler_view"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/maintenance_recycler_view"
-        android:layout_width="410dp"
-        android:layout_height="665dp"
+        android:layout_width="wrap_content"
+        android:layout_height="691dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/vehicle_list"
         app:layout_constraintTop_toBottomOf="@+id/vehicle_list"
         tools:listitem="@layout/maintenance_item" />
 
@@ -34,13 +34,10 @@
         android:id="@+id/add_new_maintenance_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_margin="32dp"
         android:clickable="true"
         android:focusable="true"
         android:src="@android:drawable/ic_input_add"
-        app:layout_constraintBottom_toBottomOf="@id/maintenance_recycler_view"
-        app:layout_constraintEnd_toEndOf="@id/maintenance_recycler_view"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@id/maintenance_recycler_view" />
+        android:layout_gravity="bottom|end" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -15,27 +15,27 @@ import retrofit2.http.Path;
 public interface VehicleService {
 
     // Get all maintenance records
-    @GET("VehicleMaintenance/")
+    @GET("VehicleRecords/")
     Call<List<VehicleMaintenance>> getAllMaintenanceRecords();
 
 
     // Example - get maintenance record by ID
-    @GET("VehicleMaintenance/{id}/")
+    @GET("VehicleRecords/{id}/")
     Call<VehicleMaintenance> get(@Path("id") int id);
 
 
     // Insert maintenance record
-    @POST("VehicleMaintenance/")
+    @POST("VehicleRecords/")
     Call<Void> insert(@Body VehicleMaintenance vehicle);
 
 
     // Update maintenance record
-    @PATCH("VehicleMaintenance/{id}/")
+    @PATCH("VehicleRecords/{id}/")
     Call<Void> update(@Body VehicleMaintenance vehicle, @Path("id") int id);
 
 
     // Delete maintenance record
-    @DELETE("VehicleMaintenance/{id}/")
+    @DELETE("VehicleRecords/{id}/")
     Call<Void> delete(@Path("id") int id);
 
 }

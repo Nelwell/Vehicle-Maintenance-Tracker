@@ -21,9 +21,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.vehiclemaintenancetracker.R;
 import com.example.vehiclemaintenancetracker.model.VehicleMaintenance;
 import com.example.vehiclemaintenancetracker.viewmodel.MaintenanceViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 
 public class MaintenanceListFragment extends Fragment {
 
@@ -34,6 +38,7 @@ public class MaintenanceListFragment extends Fragment {
     private RecyclerView recyclerView;
     private MaintenanceViewModel maintenanceViewModel;
     private AfterTitleScreenListener afterTitleScreenListener;
+//    private AddMaintenanceItemFabListener addMaintenanceItemFabListener;
 
     public interface AfterTitleScreenListener {
         void viewVehicleMaintenanceList();
@@ -53,8 +58,8 @@ public class MaintenanceListFragment extends Fragment {
 
         Log.d(TAG, "onAttach");
 
-        if (context instanceof MaintenanceListFragment.AfterTitleScreenListener) {
-            afterTitleScreenListener = (MaintenanceListFragment.AfterTitleScreenListener) context;
+        if (context instanceof AfterTitleScreenListener) {
+            afterTitleScreenListener = (AfterTitleScreenListener) context;
             Log.d(TAG, "Listener set");
         } else {
             throw new RuntimeException(context.getClass().getName() + " should implement AfterTitleScreenListener");
@@ -65,7 +70,14 @@ public class MaintenanceListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_maintenance_list, container, false);
 
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
+        OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(logging)
+                .build();
+
         vehicle = view.findViewById(R.id.vehicle_list);
+        final FloatingActionButton addMaintenanceFab = view.findViewById(R.id.add_new_maintenance_fab);
 
         recyclerView = view.findViewById(R.id.maintenance_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -80,6 +92,13 @@ public class MaintenanceListFragment extends Fragment {
             public void onChanged(List<VehicleMaintenance> maintenances) {
                 adapter.setMaintenance(maintenances);
                 Toast.makeText(getContext(), "onChanged", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        addMaintenanceFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 
