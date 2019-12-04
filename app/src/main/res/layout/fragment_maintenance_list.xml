@@ -6,17 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".view.MaintenanceListFragment">
 
-    <Spinner
-        android:id="@+id/vehicle_list"
-        android:layout_width="410dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="8dp"
-        android:contextClickable="true"
-        android:spinnerMode="dropdown"
-        app:layout_constraintEnd_toEndOf="@id/maintenance_recycler_view"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<!--    <Spinner-->
+<!--        android:id="@+id/vehicle_list"-->
+<!--        android:layout_width="410dp"-->
+<!--        android:layout_height="45dp"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:contextClickable="true"-->
+<!--        android:spinnerMode="dropdown"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/maintenance_recycler_view"-->
+<!--        app:layout_constraintHorizontal_bias="0.0"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/maintenance_recycler_view"

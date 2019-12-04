@@ -12,9 +12,21 @@
         android:padding="8dp">
 
         <TextView
+            android:id="@+id/vehicle_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:text="@string/vehicle"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+
+
+        <TextView
             android:id="@+id/maintenance_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/vehicle_textview"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:text="@string/maintenance"

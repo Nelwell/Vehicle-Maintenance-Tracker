@@ -1,60 +1,57 @@
 package com.example.vehiclemaintenancetracker.view;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.vehiclemaintenancetracker.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.vehiclemaintenancetracker.model.VehicleMaintenance;
+import com.example.vehiclemaintenancetracker.service.VehicleService;
+import com.example.vehiclemaintenancetracker.viewmodel.MaintenanceViewModel;
+
+import java.util.Date;
 
 public class NewMaintenanceItemFragment extends Fragment {
+
+    private static final String TAG = "NEW_MAINTENANCE_ITEM_FRAGMENT";
+
+    private EditText vehicleEditText;
     private EditText maintenanceEditText;
     private EditText mileageEditText;
     private EditText locationEditText;
     private EditText notesEditText;
-    private TextView dateTextView;
+    private MaintenanceViewModel maintenanceViewModel;
+    private OnNewMaintenanceAddedListener newMaintenanceListener;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
+    public interface OnNewMaintenanceAddedListener {
+        void onNewMaintenanceAdded(VehicleMaintenance vehicleMaintenance);
+    }
 
     public NewMaintenanceItemFragment() {
         // Required empty public constructor
     }
 
 
-    // TODO: Rename and change types and number of parameters
-    public static NewMaintenanceItemFragment newInstance(String param1, String param2) {
-        NewMaintenanceItemFragment fragment = new NewMaintenanceItemFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public static NewMaintenanceItemFragment newInstance() {
+        return new NewMaintenanceItemFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        // Initialize maintenanceViewModel
+        maintenanceViewModel = ViewModelProviders.of(this).get(MaintenanceViewModel.class);
     }
 
     @Override
@@ -63,35 +60,78 @@ public class NewMaintenanceItemFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_new_maintenance_item, container, false);
 
-        return view;
-    }
+        // Get references to string resources
+        vehicleEditText = view.findViewById(R.id.vehicle_edittext);
+        maintenanceEditText = view.findViewById(R.id.maintenance_edittext);
+        mileageEditText = view.findViewById(R.id.mileage_edittext);
+        locationEditText = view.findViewById(R.id.location_edittext);
+        notesEditText = view.findViewById(R.id.notes_edittext);
+        Button okButton = view.findViewById(R.id.ok_button);
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+        // okButton click listener
+        okButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // Get all values from edittexts of newMaintenanceItem
+                String vehicle = vehicleEditText.getText().toString();
+                String maintenance = maintenanceEditText.getText().toString();
+                int mileage = Integer.parseInt(mileageEditText.getText().toString());
+                String location = locationEditText.getText().toString();
+                // Notes optional field
+                String notes = notesEditText.getText().toString();
+
+                // Checks if any of required fields are empty
+                if (vehicle.isEmpty() || maintenance.isEmpty() || mileageEditText.getText().toString().isEmpty()
+                        || location.isEmpty()) {
+                    Toast.makeText(NewMaintenanceItemFragment.this.getContext(),
+                            "Enter a vehicle, maintenance, current mileage, and location of repair", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                // Bundles all fields into new VehicleMaintenance item
+                VehicleMaintenance newMaintenanceItem = new VehicleMaintenance(vehicle, maintenance, mileage, location, notes, new Date());
+                // Insert newMaintenanceItem using maintenanceViewModel
+                maintenanceViewModel.insert(newMaintenanceItem).observe(getActivity(), new Observer<String>() {
+                    @Override
+                    public void onChanged(String s) {
+                        Log.d(TAG, "s" + s);
+                        if (s.equals("success")) {
+                            Toast.makeText(getActivity(), "Movie added!", Toast.LENGTH_SHORT).show();
+                        } else if (s.contains("duplicate key")) {
+                            Toast.makeText(getActivity(), "You already added that movie!", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getActivity(), "Error adding movie", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+
+                // notifies Activity so fragments can be swapped
+                newMaintenanceListener.onNewMaintenanceAdded(newMaintenanceItem);
+            }
+        });
+
+        return view;
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnNewMaintenanceAddedListener) {
+            newMaintenanceListener = (OnNewMaintenanceAddedListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnNewMaintenanceAddedListener");
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
-    }
-
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+        newMaintenanceListener = null;
     }
 }

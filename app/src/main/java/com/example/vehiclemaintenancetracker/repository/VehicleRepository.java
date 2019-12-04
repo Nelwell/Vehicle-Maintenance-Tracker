@@ -29,20 +29,16 @@ public class VehicleRepository {
     public VehicleRepository() {
 
         // Create client with interceptor to set header on each request
-//        OkHttpClient client = new OkHttpClient.Builder()
-//                .addInterceptor(new AuthorizationHeaderInterceptor())
-//                .build();
-
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
         OkHttpClient client = new OkHttpClient.Builder()
+                .addInterceptor(new AuthorizationHeaderInterceptor())
                 .addInterceptor(logging)
                 .build();
 
         // Create and configure Retrofit instance
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(baseURL)
-//                .addConverterFactory(JacksonConverterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build();

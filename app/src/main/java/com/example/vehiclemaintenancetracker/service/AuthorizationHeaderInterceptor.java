@@ -25,10 +25,10 @@ public class AuthorizationHeaderInterceptor implements Interceptor {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
         logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
 
-        OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(new AuthorizationHeaderInterceptor())
-                .addInterceptor(logging)
-                .build();
+//        OkHttpClient client = new OkHttpClient.Builder()
+//                .addInterceptor(new AuthorizationHeaderInterceptor())
+//                .addInterceptor(logging)
+//                .build();
 //        Log.d(TAG, "header built");
         return chain.proceed(requestWithHeaders);
     }

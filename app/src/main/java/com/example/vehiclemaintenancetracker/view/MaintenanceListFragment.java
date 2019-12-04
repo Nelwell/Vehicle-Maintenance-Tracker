@@ -26,22 +26,24 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
-
 public class MaintenanceListFragment extends Fragment {
 
-    private static final String TAG = "Maintenance Items List Fragment";
+    private static final String TAG = "MaintenanceListFragment";
 
-    private Spinner vehicle;
+    //    private Spinner vehicle;
+    FloatingActionButton addMaintenanceFab;
     private MaintenanceAdapter adapter;
     private RecyclerView recyclerView;
     private MaintenanceViewModel maintenanceViewModel;
     private AfterTitleScreenListener afterTitleScreenListener;
-//    private AddMaintenanceItemFabListener addMaintenanceItemFabListener;
+    private StartNewMaintenanceItemListener newMaintenanceItemListener;
 
     public interface AfterTitleScreenListener {
         void viewVehicleMaintenanceList();
+    }
+
+    interface StartNewMaintenanceItemListener {
+        void startNewMaintenanceItem();
     }
 
     public MaintenanceListFragment() {
@@ -60,9 +62,16 @@ public class MaintenanceListFragment extends Fragment {
 
         if (context instanceof AfterTitleScreenListener) {
             afterTitleScreenListener = (AfterTitleScreenListener) context;
-            Log.d(TAG, "Listener set");
+            Log.d(TAG, "After Title Screen Listener set");
         } else {
             throw new RuntimeException(context.getClass().getName() + " should implement AfterTitleScreenListener");
+        }
+
+        if (context instanceof StartNewMaintenanceItemListener) {
+            newMaintenanceItemListener = (StartNewMaintenanceItemListener) context;
+            Log.d(TAG, "New Maintenance Item Listener set");
+        } else {
+            throw new RuntimeException(context.getClass().getName() + " should implement StartNewMaintenanceItemListener");
         }
     }
 
@@ -70,47 +79,53 @@ public class MaintenanceListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_maintenance_list, container, false);
 
-        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
-        logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
-        OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(logging)
-                .build();
-
-        vehicle = view.findViewById(R.id.vehicle_list);
-        final FloatingActionButton addMaintenanceFab = view.findViewById(R.id.add_new_maintenance_fab);
+//        vehicle = view.findViewById(R.id.vehicle_list);
 
         recyclerView = view.findViewById(R.id.maintenance_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
 
+        // Creates adapter
         adapter = new MaintenanceAdapter();
+        // Sets adapter in recycler view
         recyclerView.setAdapter(adapter);
 
-        maintenanceViewModel = ViewModelProviders.of(this).get(MaintenanceViewModel.class);
-        maintenanceViewModel.getAllMaintenanceRecords().observe(this, new Observer<List<VehicleMaintenance>>() {
-            @Override
-            public void onChanged(List<VehicleMaintenance> maintenances) {
-                adapter.setMaintenance(maintenances);
-                Toast.makeText(getContext(), "onChanged", Toast.LENGTH_SHORT).show();
-            }
-        });
-
+        addMaintenanceFab = view.findViewById(R.id.add_new_maintenance_fab);
         addMaintenanceFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                newMaintenanceItemListener.startNewMaintenanceItem();
             }
         });
 
         return view;
     }
 
-    public static class MaintenanceAdapter extends RecyclerView.Adapter<MaintenanceAdapter.MaintenanceHolder> {
+    // Overrides onResume() to reload list with newest data
+    @Override
+    public void onResume() {
+        super.onResume();
+        maintenanceViewModel = ViewModelProviders.of(this).get(MaintenanceViewModel.class);
+        maintenanceViewModel.getAllMaintenanceRecords().observe(this, new Observer<List<VehicleMaintenance>>() {
+
+            @Override
+            public void onChanged(List<VehicleMaintenance> maintenances) {
+                adapter.setMaintenance(maintenances);
+                // For testing
+//                Toast.makeText(getContext(), "onChanged", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    // Class to create Adapter and perform adapter functions
+    private class MaintenanceAdapter extends RecyclerView.Adapter<MaintenanceAdapter.MaintenanceHolder> {
+        // Where adapter stores its data
         private List<VehicleMaintenance> maintenance = new ArrayList<>();
 
         @NonNull
         @Override
         public MaintenanceHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            // Get a reference to the maintenance_item RelativeLayout container and inflate in, in this context
             View itemView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.maintenance_item, parent, false);
             return new MaintenanceHolder(itemView);
@@ -119,10 +134,15 @@ public class MaintenanceListFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull MaintenanceHolder holder, int position) {
             VehicleMaintenance currentMaintenance = maintenance.get(position);
-            holder.maintenanceEditText.setText(currentMaintenance.getService());
-            holder.mileageEditText.setText(String.valueOf(currentMaintenance.getMileage()));
-            holder.locationEditText.setText(currentMaintenance.getLocation());
-            holder.notesEditText.setText(currentMaintenance.getNotes());
+            holder.vehicleTextview.setText("Vehicle: " + currentMaintenance.getVehicle());
+            holder.maintenanceTextview.setText("Repair: " + currentMaintenance.getService());
+            holder.mileageTextview.setText("Mileage: " + String.valueOf(currentMaintenance.getMileage()));
+            holder.locationTextview.setText("Location: " + currentMaintenance.getLocation());
+            if (currentMaintenance.getNotes() == null) {
+                holder.notesTextview.setText("Notes: N/A");
+            } else {
+                holder.notesTextview.setText("Notes: " + currentMaintenance.getNotes());
+            }
 //            holder.dateTextView.setText(currentMaintenance.getDateCreated());
         }
 
@@ -133,23 +153,26 @@ public class MaintenanceListFragment extends Fragment {
 
         public void setMaintenance(List<VehicleMaintenance> maintenance) {
             this.maintenance = maintenance;
+            // Tell recyclerView to reload
             notifyDataSetChanged();
         }
 
         class MaintenanceHolder extends RecyclerView.ViewHolder {
-            private EditText maintenanceEditText;
-            private EditText mileageEditText;
-            private EditText locationEditText;
-            private EditText notesEditText;
+            private TextView vehicleTextview;
+            private TextView maintenanceTextview;
+            private TextView mileageTextview;
+            private TextView locationTextview;
+            private TextView notesTextview;
             private TextView dateTextView;
 
             public MaintenanceHolder(@NonNull View itemView) {
                 super(itemView);
-                maintenanceEditText = itemView.findViewById(R.id.maintenance_edittext);
-                mileageEditText = itemView.findViewById(R.id.mileage_edittext);
-                locationEditText = itemView.findViewById(R.id.location_edittext);
-                notesEditText = itemView.findViewById(R.id.notes_edittext);
-                dateTextView = itemView.findViewById(R.id.date_textview);
+                vehicleTextview = itemView.findViewById(R.id.vehicle_textview);
+                maintenanceTextview = itemView.findViewById(R.id.maintenance_textview);
+                mileageTextview = itemView.findViewById(R.id.mileage_textview);
+                locationTextview = itemView.findViewById(R.id.location_textview);
+                notesTextview = itemView.findViewById(R.id.notes_textview);
+//                dateTextView = itemView.findViewById(R.id.date_textview);
 
             }
         }

@@ -6,17 +6,17 @@ public class VehicleMaintenance {
 
     private int id;
     private String vehicle;
-    private String location;
     private String service;
     private int mileage;
+    private String location;
     private String notes;
     private Date dateCreated;
 
-    public VehicleMaintenance(String vehicle, String location, String service, int mileage, String notes, Date dateCreated) {
+    public VehicleMaintenance(String vehicle, String service, int mileage, String location, String notes, Date dateCreated) {
         this.vehicle = vehicle;
-        this.location = location;
         this.service = service;
         this.mileage = mileage;
+        this.location = location;
         this.notes = notes;
         this.dateCreated = dateCreated;
     }
@@ -37,14 +37,6 @@ public class VehicleMaintenance {
         this.vehicle = vehicle;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
     public String getService() {
         return service;
     }
@@ -59,6 +51,14 @@ public class VehicleMaintenance {
 
     public void setMileage(int mileage) {
         this.mileage = mileage;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getNotes() {
@@ -81,10 +81,10 @@ public class VehicleMaintenance {
     public String toString() {
         return "VehicleMaintenance{" +
                 "id=" + id +
-                ", vehicle=" + vehicle +
-                ", location='" + location + '\'' +
+                ", vehicle='" + vehicle + '\'' +
                 ", service='" + service + '\'' +
                 ", mileage=" + mileage +
+                ", location='" + location + '\'' +
                 ", notes='" + notes + '\'' +
                 ", dateCreated=" + dateCreated +
                 '}';
