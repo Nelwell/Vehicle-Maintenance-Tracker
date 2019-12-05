@@ -4,11 +4,13 @@
     android:layout_height="wrap_content"
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
-    android:layout_marginEnd="8dp">
+    android:layout_marginEnd="8dp"
+    android:background="#FAF0C0">
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="#F5E883"
         android:padding="8dp">
 
         <TextView
@@ -18,9 +20,8 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:text="@string/vehicle"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
-
-
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/maintenance_textview"
@@ -30,7 +31,8 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:text="@string/maintenance"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/mileage_textview"
@@ -40,7 +42,8 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:text="@string/mileage"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/location_textview"
@@ -50,7 +53,8 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:text="@string/location"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/notes_textview"
@@ -60,7 +64,8 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:text="@string/notes"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/date_textview"

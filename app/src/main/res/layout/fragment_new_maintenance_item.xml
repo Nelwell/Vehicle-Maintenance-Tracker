@@ -5,10 +5,11 @@
     android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:layout_marginStart="8dp"
     android:layout_marginTop="8dp"
-    android:layout_marginEnd="8dp">
+    android:layout_marginEnd="8dp"
+    android:background="#88FFEB3B"
+    android:orientation="vertical">
 
 
     <EditText
@@ -17,42 +18,49 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:hint="Vehicle year, make, model"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/maintenance_edittext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Maintenance performed"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/mileage_edittext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Current mileage"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/location_edittext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Location of maintenance"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/notes_edittext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="Additional notes"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/ok_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="@android:string/ok" />
+        android:background="#8DBBE9"
+        android:text="@android:string/ok"
+        android:textStyle="bold" />
 
 
 </LinearLayout>
