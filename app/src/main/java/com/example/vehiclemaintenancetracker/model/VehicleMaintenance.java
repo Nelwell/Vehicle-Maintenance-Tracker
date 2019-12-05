@@ -10,15 +10,15 @@ public class VehicleMaintenance {
     private int mileage;
     private String location;
     private String notes;
-    private Date dateCreated;
+    private Date date;
 
-    public VehicleMaintenance(String vehicle, String service, int mileage, String location, String notes, Date dateCreated) {
+    public VehicleMaintenance(String vehicle, String service, int mileage, String location, String notes, Date date) {
         this.vehicle = vehicle;
         this.service = service;
         this.mileage = mileage;
         this.location = location;
         this.notes = notes;
-        this.dateCreated = dateCreated;
+        this.date = date;
     }
 
     public int getId() {
@@ -69,12 +69,12 @@ public class VehicleMaintenance {
         this.notes = notes;
     }
 
-    public Date getDateCreated() {
-        return dateCreated;
+    public Date getDate() {
+        return date;
     }
 
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     @Override
@@ -86,7 +86,7 @@ public class VehicleMaintenance {
                 ", mileage=" + mileage +
                 ", location='" + location + '\'' +
                 ", notes='" + notes + '\'' +
-                ", dateCreated=" + dateCreated +
+                ", dateCreated=" + date +
                 '}';
     }
 }

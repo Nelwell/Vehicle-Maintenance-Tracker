@@ -54,6 +54,7 @@ public class MaintenanceListFragment extends Fragment {
         return new MaintenanceListFragment();
     }
 
+    // Set listeners
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
@@ -143,7 +144,7 @@ public class MaintenanceListFragment extends Fragment {
             } else {
                 holder.notesTextview.setText("Notes: " + currentMaintenance.getNotes());
             }
-//            holder.dateTextView.setText(currentMaintenance.getDateCreated());
+            holder.dateTextView.setText(currentMaintenance.getDate().toString());
         }
 
         @Override
@@ -172,7 +173,7 @@ public class MaintenanceListFragment extends Fragment {
                 mileageTextview = itemView.findViewById(R.id.mileage_textview);
                 locationTextview = itemView.findViewById(R.id.location_textview);
                 notesTextview = itemView.findViewById(R.id.notes_textview);
-//                dateTextView = itemView.findViewById(R.id.date_textview);
+                dateTextView = itemView.findViewById(R.id.date_textview);
 
             }
         }

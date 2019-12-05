@@ -89,24 +89,23 @@ public class NewMaintenanceItemFragment extends Fragment {
                     return;
                 }
                 // Bundles all fields into new VehicleMaintenance item
-                VehicleMaintenance newMaintenanceItem = new VehicleMaintenance(vehicle, maintenance, mileage, location, notes, new Date());
+                final VehicleMaintenance newMaintenanceItem = new VehicleMaintenance(vehicle, maintenance, mileage, location, notes, new Date());
                 // Insert newMaintenanceItem using maintenanceViewModel
                 maintenanceViewModel.insert(newMaintenanceItem).observe(getActivity(), new Observer<String>() {
                     @Override
-                    public void onChanged(String s) {
-                        Log.d(TAG, "s" + s);
-                        if (s.equals("success")) {
-                            Toast.makeText(getActivity(), "Movie added!", Toast.LENGTH_SHORT).show();
-                        } else if (s.contains("duplicate key")) {
-                            Toast.makeText(getActivity(), "You already added that movie!", Toast.LENGTH_SHORT).show();
+                    public void onChanged(String vm) {
+                        Log.d(TAG, "s" + vm);
+                        if (vm.equals("success")) {
+                            // Notifies Main Activity so fragments can be swapped
+                            newMaintenanceListener.onNewMaintenanceAdded(newMaintenanceItem);
+                            Toast.makeText(getActivity(), "Maintenance Item added!", Toast.LENGTH_SHORT).show();
+                        } else if (vm.contains("duplicate key")) {
+                            Toast.makeText(getActivity(), "You already added that Maintenance Item!", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(getActivity(), "Error adding movie", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
-
-                // notifies Activity so fragments can be swapped
-                newMaintenanceListener.onNewMaintenanceAdded(newMaintenanceItem);
             }
         });
 
