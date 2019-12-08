@@ -24,7 +24,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 
 public class MainActivity extends AppCompatActivity implements
-        OpeningFragment.OpeningFragmentListener,
         MaintenanceListFragment.AfterTitleScreenListener,
         NewMaintenanceItemFragment.OnNewMaintenanceAddedListener,
         MaintenanceListFragment.StartNewMaintenanceItemListener {
@@ -39,31 +38,9 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        openingTitleScreen();
+        viewVehicleMaintenanceList();
     }
 
-    @Override
-    public void openingTitleScreen() {
-
-        OpeningFragment mOpeningFragment = OpeningFragment.newInstance();
-
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-
-        ft.add(android.R.id.content, mOpeningFragment, TAG_OPENING_TITLE);
-        ft.addToBackStack(null);
-        ft.commit();
-
-        // Taken from StackOverflow @ https://stackoverflow.com/questions/3072173/how-to-call-a-method-after-a-delay-in-android
-        // Delays the call to viewVehicleMaintenanceList by the specified amount of time
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                viewVehicleMaintenanceList();
-            }
-        }, 2500);
-    }
 
     @Override
     public void viewVehicleMaintenanceList() {
